@@ -1,0 +1,11 @@
+name: example Python CI pipeline
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  runs_on: ubuntu-latest
+
+
+
