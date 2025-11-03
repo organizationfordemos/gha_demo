@@ -10,8 +10,18 @@ requires-python = ">=3.10"
 dependencies = [
 ]
 
+[dependency-groups]
+test = [
+    "pytest = 8.4.2"
+    "coverage = 7.11.0
+]
+code_quality = [
+    "pre-commit = 4.3.0"
+]
+
 [tool.poetry]
 packages = [{include = "demo_gha", from = "src"}]
+
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

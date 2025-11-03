@@ -1,0 +1,53 @@
+name: example Python CI pipeline
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build_and_test:
+    runs_on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+      
+      - name: Run pre-commit
+        run: |
+          poetry run pre-commit run --all-files
+
+      - name: Run tests with pytest
+        run: |
+          poetry run coverage run -m pytest tests
+          
+      - name: Coverage report
+        run: |
+          poetry run coverage report -m
+
+    # vulnerability_analysis:
+    #   runs-on: ubuntu-latest
+    #   permissions:
+    #     actions: read
+    #     contents: read
+    #     security-events: write
+    #   steps:
+    #     - name: Checkout repository
+    #       uses: actions/checkout@v4
+
+    #     - name: Initialize CodeQL
+    #       uses: github/codeql-action/autobuild@v3
+          
+    #     - name: Perform CodeQL Analysis
+    #       uses: github/codeql-action/analyze@v3
+    #       with:
+    #         category: "/language:python"      
