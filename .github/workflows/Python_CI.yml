@@ -23,7 +23,7 @@ jobs:
       - name: Run tests with pytest
         run: |
           poetry run coverage run -m pytest tests
-          
+
       - name: Coverage report
         run: |
           poetry run coverage report -m
@@ -51,8 +51,8 @@ jobs:
 
     #     - name: Initialize CodeQL
     #       uses: github/codeql-action/autobuild@v3
-          
+
     #     - name: Perform CodeQL Analysis
     #       uses: github/codeql-action/analyze@v3
     #       with:
-    #         category: "/language:python"      
+    #         category: "/language:python"
