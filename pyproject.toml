@@ -13,7 +13,7 @@ dependencies = [
 [dependency-groups]
 test = [
     "pytest == 8.4.2",
-    "coverage == 7.11.0""
+    "coverage == 7.11.0"
 ]
 code_quality = [
     "pre-commit == 4.3.0"
