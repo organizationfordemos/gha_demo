@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Set up Python 
+
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: 3.11
@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
-      
+
       - name: Run pre-commit
         run: |
           poetry run pre-commit run --all-files
@@ -30,7 +30,7 @@ jobs:
       - name: Run tests with pytest
         run: |
           poetry run coverage run -m pytest tests
-          
+
       - name: Coverage report
         run: |
           poetry run coverage report -m
@@ -47,8 +47,8 @@ jobs:
 
     #     - name: Initialize CodeQL
     #       uses: github/codeql-action/autobuild@v3
-          
+
     #     - name: Perform CodeQL Analysis
     #       uses: github/codeql-action/analyze@v3
     #       with:
-    #         category: "/language:python"      
+    #         category: "/language:python"
