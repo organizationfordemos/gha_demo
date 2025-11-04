@@ -1,17 +1,31 @@
 name: Python CD Pipeline
 
 on:
-  pull_request_review:
-    types: [submitted]
-    branches: [main]
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
 
 permissions:
+  actions: read
   contents: read
   packages: write
+  security-events: write
 
 jobs:
+  vulnerability_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python    
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
   build-and-push:
-    if: github.event.review.state == 'approved'
+    needs: vulnerability_scan
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
