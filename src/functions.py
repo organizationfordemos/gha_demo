@@ -10,8 +10,8 @@ def subtract(a, b):
     return a - b
 
 
-password = 4
-password_2 = "asdflskd"
+password = "MySuperSecretPassword123!"
+API_TOKEN = "1234567890abcdef1234567890abcdef"
 AZURE_TOKEN = (
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkpXVC1L...fake-token-for-demo..."
 )
