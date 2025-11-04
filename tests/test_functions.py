@@ -1,4 +1,4 @@
-from src.functions import sum  # , divide
+from src.functions import divide, sum
 
 
 def test_sum():
@@ -6,4 +6,4 @@ def test_sum():
 
 
 def test_divide():
-    assert 1 + 1 == 1
+    assert divide(1, 1) == 1
