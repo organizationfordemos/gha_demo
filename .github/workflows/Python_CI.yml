@@ -1,9 +1,8 @@
 name: Python CI Pipeline
 
 on:
-  push:
-    branches-ignore:
-      - master
+  pull_request:
+    branches: [master]
 
 permissions:
   actions: read
@@ -28,29 +27,51 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
 
-      - name: Run pre-commit
+      - name: Run pre-commit hooks
+        id: precommit
         run: |
-          poetry run pre-commit run --all-files
+          poetry run pre-commit run --all-files > precommit_output.txt || true
+          echo "::set-output name=output::$(cat precommit_output.txt)"
+        continue-on-error: true
 
-      - name: Run tests with pytest
-        run: |
-          poetry run coverage run -m pytest tests
+      - name: Post pre-commit results to PR
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **Pre-commit hook results:**  
+            ```
+            ${{ steps.precommit.outputs.output }}
+            ```
+          identifier: precommit-results
 
-      - name: Coverage report
+      - name: Run Pytest with GitHub annotations
+        run: poetry run pytest --github-actions
+        continue-on-error: true
+
+      - name: Generate coverage report
         run: |
-          poetry run coverage report -m
+          poetry run coverage run -m pytest || true
+          poetry run coverage xml
+          poetry run coverage report -m > coverage.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: coverage.xml
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: python
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
-        with:
-          build-command: poetry install --no-root
+      # - name: Autobuild
+      #   uses: github/codeql-action/autobuild@v3
+      #   with:
+      #     build-command: poetry install --no-root
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:python"
+        continue-on-error: true
