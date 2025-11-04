@@ -41,9 +41,14 @@ jobs:
           poetry run coverage report -m
 
       - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+
+      - name: Autobuild
         uses: github/codeql-action/autobuild@v3
+        with:
+          build-command: poetry install --no-root
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:python"
