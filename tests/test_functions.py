@@ -1,9 +1,9 @@
-from src.functions import sum  # , divide
+from src.functions import divide, sum
 
 
 def test_sum():
-    assert 1 + 1 == 2
+    assert sum(1, 1) == 2
 
 
 def test_divide():
-    assert 1 / 1 == 1
+    assert divide(1, 1) == 1
