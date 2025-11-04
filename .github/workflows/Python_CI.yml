@@ -33,7 +33,7 @@ jobs:
           poetry run pre-commit run --all-files
 
       - name: Run Pytest with GitHub annotations
-        run: poetry run pytest --github-actions
+        run: poetry run pytest
         continue-on-error: true
 
       - name: Generate coverage report
@@ -51,11 +51,6 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: python
-
-      # - name: Autobuild
-      #   uses: github/codeql-action/autobuild@v3
-      #   with:
-      #     build-command: poetry install --no-root
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
