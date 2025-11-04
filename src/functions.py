@@ -10,13 +10,16 @@ def subtract(a, b):
     return a - b
 
 
-password = "MySuperSecretPassword123!"
-API_TOKEN = "1234567890abcdef1234567890abcdef"
-AZURE_TOKEN = (
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkpXVC1L...fake-token-for-demo..."
-)
+PASSWORD = "SuperSecretPassword123!"
+API_KEY = "AKIAIOSFODNN7EXAMPLE1234567890"
 
 
 def unsafe_query(user_input):
     query = "SELECT * FROM users WHERE username = '" + user_input + "';"
     return query
+
+
+if __name__ == "__main__":
+    print(API_KEY)
+    print(PASSWORD)
+    print(unsafe_query("admin"))
