@@ -45,7 +45,6 @@ jobs:
             ```
             ${{ steps.precommit.outputs.output }}
             ```
-          identifier: precommit-results
 
       - name: Run Pytest with GitHub annotations
         run: poetry run pytest --github-actions
