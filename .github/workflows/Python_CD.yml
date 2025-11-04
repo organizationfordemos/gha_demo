@@ -1,5 +1,4 @@
-#Publish to Github Container Registry
-name: Build and Push Docker Image
+name: Python CD Pipeline
 
 on:
   pull_request_review:
